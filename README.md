@@ -23,3 +23,7 @@
 3. Pandas基础
 4. Python简单绘图技巧
 5. 基本的机器学习框架
+
+## 无法浏览怎么办？
+
+无法直接在GitHub上加载ipynb格式的话，可以下载文件在本地使用Jupyter Notebook浏览，或者点击使用[nbviewer](https://nbviewer.jupyter.org/)浏览。
