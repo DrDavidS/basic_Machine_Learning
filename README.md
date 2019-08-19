@@ -18,12 +18,26 @@
 
 ## 学习路线
 
-1. Python基础
-2. Numpy基础
-3. Pandas基础
-4. Python简单绘图技巧
-5. 基本的机器学习框架
+### Python基础
 
-## 无法浏览怎么办？
+包括基本的、必要的Python3语法。如果想学习更多Python3的相关知识，推荐阅读《笨办法学Python3》。
+
+### Numpy基础
+
+如何使用Numpy进行快速矩阵运算？本节包含基本的Numpy基础操作知识。
+
+### Pandas基础
+
+使用Pandas的基本操作，主要针对如何将数据读取为DataFrame格式，并且有简单的Matplotlib用法。
+
+### Python简单绘图技巧
+
+待补充
+
+### 基本的机器学习框架
+
+如何使用 SKlearn、XGBoost、LightGBM等框架。不包括如TF、PyTorch等深度学习框架。
+
+## 无法浏览怎么办
 
 无法直接在GitHub上加载ipynb格式的话，可以下载文件在本地使用Jupyter Notebook浏览，或者点击使用[nbviewer](https://nbviewer.jupyter.org/)浏览。
