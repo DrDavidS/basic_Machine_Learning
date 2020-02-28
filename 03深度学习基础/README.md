@@ -18,4 +18,4 @@ github：https://github.com/DrDavidS/basic_Machine_Learning
 
 ## 注意
 
-请先安装好 Tensorflow 2.0 或者 PyTorch 1.3.1 ，或者它们的更新版本。
+请先安装好 Tensorflow 2.0 或者 PyTorch 1.4.0 ，或者它们的更新版本。
