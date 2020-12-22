@@ -3,3 +3,4 @@
 
 .pub
 *.ipynb
+.DS_Store
