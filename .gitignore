@@ -4,3 +4,4 @@
 .pub
 *.ipynb
 .DS_Store
+.pyc
