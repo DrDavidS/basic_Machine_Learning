@@ -18,7 +18,6 @@ from typing import List, Tuple
 import numpy as np
 import torch
 from torch import Tensor
-import torch.nn as nn
 from torch.utils.data import TensorDataset, DataLoader, SequentialSampler
 from transformers import BertTokenizer
 
@@ -48,6 +47,7 @@ class BertPredictor(object):
         """
         if not model_file:
             model_file = os.path.join(config.save_path, config.model_name)
+        print(f"Loading model at: {model_file}")
         if torch.cuda.is_available() and use_cuda:
             device_id = self.device_id
             torch.cuda.set_device(device_id)
@@ -55,6 +55,7 @@ class BertPredictor(object):
                 torch.load(model_file)
             )
             model.cuda()
+            print("Model already in CUDA.")
         else:
             model.load_state_dict(
                 torch.load(
@@ -62,6 +63,7 @@ class BertPredictor(object):
                     map_location=torch.device("cpu"),
                 )
             )
+            print("Model already in CPU.")
 
     def _test_file_reader(self) -> List[str]:
         """
@@ -122,24 +124,12 @@ class BertPredictor(object):
         )
         return test_dataloader
 
-    def predict(self, model: nn.modules):
+    def predict(self) -> List[np.array]:
         """
-        单条预测。如果是空列表，返回空值即可。
-
-        Args:
-            dataloader (DataLoader): 预处理好的数据放入 Dataloader 中，供预测使用。
-            chunked (List[str]): 单篇裁判文书内容。
-            case like: ['上海市浦东新区人民法院', '（2019）沪0115民初76188号', '民事案件',
-                        '民事一审', '2019-09-29', '人民法院认为不宜在互联网公布的其他情形']
+        预测
 
         Returns:
-            List[List[str]]: 预测结果。第一个列表是预测的label，第二个列表是对应的句子。
-            case like :
-            [['头部', '头部', '头部', '头部', '庭审程序说明', '诉称', '结尾', '当事人'],
-            ['四川省巴中市中级人民法院', '指 定 管 辖 决 定 书', '（2020）川19刑辖9号', '四川省平昌县人民法院：',
-            '犯罪嫌疑人陈斌涉嫌受贿罪、徇私枉法罪一案，四川省巴中市人民检察院商请我院指定管辖。为有效打击犯罪，
-            依照《中华人民共和国刑事诉讼法》第二十七条之规定，经本院研究决定：', '犯罪嫌疑人陈斌涉嫌受贿罪、徇私枉法罪一案，指定你院审判。',
-            '二〇二〇年十月二十七日', '抄致：四川省巴中市人民检察院；四川省平昌县人民检察院']]
+            List[np.array]: 预测结果，需要自行从数字对应到汉字类别
         """
         model.eval()
         test_dataloader = self._to_dataloader()
@@ -164,5 +154,11 @@ class BertPredictor(object):
             scores = outputs[0].detach().cpu().numpy()
             pred_flat = np.argmax(scores, axis=1).flatten()
             pred.append(pred_flat)
-
         return pred
+
+
+if __name__ == "__main__":
+    news_predictor = BertPredictor()
+    news_predictor.load_model()
+    list_p = news_predictor.predict()  # 预测结果
+    print(list_p[0])  # np.array
